@@ -20,3 +20,16 @@ async function file(files) {
 }
 
 await file(options.cache);
+
+
+const server = http.createServer(async (req, res) => {
+    const url = new URL(req.url, `http://${options.host}:${options.port}`);
+    const code = url.pathname.slice(1);
+    const cache = `${options.cache}/${code}.jpg`;
+    
+   
+});
+
+await server.listen(options.port, options.host);
+console.log(`Сервер успішно запущено.`);
+console.log(`Слухаю на http://${options.host}:${options.port}/`);

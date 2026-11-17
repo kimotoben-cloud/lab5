@@ -10,3 +10,13 @@ program
 
 program.parse();
 const options = program.opts();
+
+async function file(files) {
+    try {
+        await fs.access(files);
+    } catch (err) {
+        await fs.mkdir(files, { recursive: true });
+    }
+}
+
+await file(options.cache);

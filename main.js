@@ -59,6 +59,16 @@ const server = http.createServer(async (req, res) => {
             res.writeHead(404, { "Content-Type": "text/plain" });
             res.end("Not Found");
         }
+        .
+    } else if (req.method == "DELETE") {
+        try {
+            await fs.unlink(`${options.cache}/${code}.jpg`);
+            res.writeHead(200, { "Content-Type": "text/plain" });
+            res.end("Deleted");
+        } catch (err) {
+            res.writeHead(404, { "Content-Type": "text/plain" });
+            res.end("Not Found");
+        }
 
 
 });

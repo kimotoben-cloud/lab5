@@ -34,7 +34,15 @@ const server = http.createServer(async (req, res) => {
             res.writeHead(200, { "Content-Type": 'image/jpeg', "Source": "cache" });
             res.end(image);
         } catch (err) {
-           
+           try {
+                const response = await agent.get(`https://http.cat/${code}`);
+                await fs.writeFile(cache, response.body);
+                res.writeHead(200, { "Content-Type": 'image/jpeg', "Source": "http.cat" });
+                res.end(response.body);
+            } catch (err) {
+                res.writeHead(404, { "Content-Type": "text/plain" });
+                res.end("Not Found");
+            }
         }
     }
 

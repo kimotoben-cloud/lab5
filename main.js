@@ -59,7 +59,7 @@ const server = http.createServer(async (req, res) => {
             res.writeHead(404, { "Content-Type": "text/plain" });
             res.end("Not Found");
         }
-        .
+        
     } else if (req.method == "DELETE") {
         try {
             await fs.unlink(`${options.cache}/${code}.jpg`);
@@ -69,7 +69,11 @@ const server = http.createServer(async (req, res) => {
             res.writeHead(404, { "Content-Type": "text/plain" });
             res.end("Not Found");
         }
-
+        
+    } else {
+        res.writeHead(405, { "Content-Type": "text/plain", "Allow": "GET, PUT, DELETE" });
+        res.end("Method Not Allowed");
+    }
 
 });
 

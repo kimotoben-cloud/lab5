@@ -26,8 +26,18 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://${options.host}:${options.port}`);
     const code = url.pathname.slice(1);
     const cache = `${options.cache}/${code}.jpg`;
-    
-   
+ 
+
+    if (req.method == "GET") {
+        try {
+            const image = await fs.readFile(cache);
+            res.writeHead(200, { "Content-Type": 'image/jpeg', "Source": "cache" });
+            res.end(image);
+        } catch (err) {
+           
+        }
+    }
+
 });
 
 await server.listen(options.port, options.host);

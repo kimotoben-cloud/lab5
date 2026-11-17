@@ -44,7 +44,22 @@ const server = http.createServer(async (req, res) => {
                 res.end("Not Found");
             }
         }
-    }
+    } else if (req.method == "PUT") {
+        try {
+            const chunks = [];
+            for await (const chunk of req) {
+                chunks.push(chunk);
+            }
+            const image = Buffer.concat(chunks);
+
+            await fs.writeFile(`${options.cache}/${code}.jpg`, image);
+            res.writeHead(201, { "Content-Type": "text/plain" });
+            res.end("Created");
+        } catch (err) {
+            res.writeHead(404, { "Content-Type": "text/plain" });
+            res.end("Not Found");
+        }
+
 
 });
 
